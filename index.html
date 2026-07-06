@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knoxified Dashboard — Coming Soon</title>
+  <meta name="description" content="The Knoxified AI dashboard is launching July 15th. AI voice agents, lead enrichment, smart booking, and email automation — all in one place.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #080d1a;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(0,212,255,0.07) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -20%;
+      left: 30%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(0,100,255,0.05) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo {
+      margin-bottom: 48px;
+    }
+
+    .logo img {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      display: block;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 11px;
+      color: #00d4ff;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00d4ff;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.7); }
+    }
+
+    h1 {
+      font-size: clamp(30px, 5.5vw, 52px);
+      font-weight: 800;
+      line-height: 1.15;
+      text-align: center;
+      max-width: 600px;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    h1 span {
+      background: linear-gradient(135deg, #00d4ff 0%, #0066ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .sub {
+      color: #4a6a8a;
+      font-size: 16px;
+      text-align: center;
+      max-width: 420px;
+      line-height: 1.65;
+      margin-bottom: 52px;
+    }
+
+    .countdown {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 56px;
+    }
+
+    .unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .unit-value {
+      background: #0e1929;
+      border: 1px solid #1a2535;
+      border-radius: 16px;
+      width: 90px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .unit-value:hover {
+      border-color: rgba(0,212,255,0.3);
+    }
+
+    .unit-value::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 40%;
+      background: linear-gradient(180deg, rgba(0,212,255,0.05) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .unit-label {
+      font-size: 10px;
+      color: #2a4a6a;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+    }
+
+    .sep {
+      font-size: 36px;
+      font-weight: 800;
+      color: #1a2535;
+      margin-top: 20px;
+      user-select: none;
+    }
+
+    .features {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 520px;
+      margin-bottom: 48px;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid #151f2e;
+      border-radius: 100px;
+      padding: 7px 14px;
+      font-size: 12px;
+      color: #5a7a9a;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .feature:hover {
+      border-color: rgba(0,212,255,0.2);
+      color: #8aa0b8;
+    }
+
+    .feature-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #00d4ff;
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+
+    .back-link {
+      font-size: 13px;
+      color: #2a4a6a;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: #00d4ff;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 20px;
+      font-size: 11px;
+      color: #151f2e;
+      letter-spacing: 0.3px;
+    }
+
+    @media (max-width: 480px) {
+      .unit-value { width: 70px; height: 70px; font-size: 28px; border-radius: 12px; }
+      .countdown { gap: 8px; }
+      .sep { font-size: 24px; margin-top: 18px; }
+      .logo img { width: 64px; height: 64px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+
+    <div class="logo">
+      <img src="./Knoxified_apple_id_logo.png" alt="Knoxified" />
+    </div>
+
+    <div class="badge">
+      <div class="badge-dot"></div>
+      Dashboard launching July 15th
+    </div>
+
+    <h1>Your AI workforce is<br><span>almost ready.</span></h1>
+    <p class="sub">The Knoxified dashboard is being finalized. Your AI systems, automations, and voice agents will be live and ready to deploy very soon.</p>
+
+    <div class="countdown">
+      <div class="unit">
+        <div class="unit-value" id="days">00</div>
+        <div class="unit-label">Days</div>
+      </div>
+      <div class="sep">:</div>
+      <div class="unit">
+        <div class="unit-value" id="hours">00</div>
+        <div class="unit-label">Hours</div>
+      </div>
+      <div class="sep">:</div>
+      <div class="unit">
+        <div class="unit-value" id="minutes">00</div>
+        <div class="unit-label">Minutes</div>
+      </div>
+      <div class="sep">:</div>
+      <div class="unit">
+        <div class="unit-value" id="seconds">00</div>
+        <div class="unit-label">Seconds</div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature"><div class="feature-dot"></div>AI Voice Agents</div>
+      <div class="feature"><div class="feature-dot"></div>Lead Enrichment</div>
+      <div class="feature"><div class="feature-dot"></div>Smart Booking</div>
+      <div class="feature"><div class="feature-dot"></div>Email Sequences</div>
+      <div class="feature"><div class="feature-dot"></div>Live Analytics</div>
+      <div class="feature"><div class="feature-dot"></div>Outbound Systems</div>
+    </div>
+
+    <a href="https://knoxified.org" class="back-link">
+      ← Back to knoxified.org
+    </a>
+
+  </div>
+
+  <div class="footer">© 2026 Knoxified. All rights reserved.</div>
+
+  <script>
+    // Launch: July 15, 2026 midnight
+    const LAUNCH = new Date('2026-07-15T00:00:00').getTime();
+
+    function pad(n) {
+      return String(n).padStart(2, '0');
+    }
+
+    function tick() {
+      const diff = LAUNCH - Date.now();
+
+      if (diff <= 0) {
+        document.getElementById('days').textContent = '00';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        document.getElementById('seconds').textContent = '00';
+        return;
+      }
+
+      document.getElementById('days').textContent = pad(Math.floor(diff / 86400000));
+      document.getElementById('hours').textContent = pad(Math.floor((diff % 86400000) / 3600000));
+      document.getElementById('minutes').textContent = pad(Math.floor((diff % 3600000) / 60000));
+      document.getElementById('seconds').textContent = pad(Math.floor((diff % 60000) / 1000));
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  </script>
+</body>
+</html>
